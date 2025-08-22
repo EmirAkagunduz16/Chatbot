@@ -38,10 +38,15 @@ export const AppContextProvider = ({ children }) => {
     try {
       if (!user) return toast("Login to create a new chat");
       navigate("/");
-      await axios.get("/api/chat/create", {
+      const { data } = await axios.get("/api/chat/create", {
         headers: { Authorization: token },
       });
-      await fetchUserChats();
+      if (data.success) {
+        await fetchUserChats();
+        toast.success("New chat created");
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -54,12 +59,10 @@ export const AppContextProvider = ({ children }) => {
       });
       if (data.success) {
         setChats(data.chats);
-        // If user has no chats, create one
-        if (data.chats.length === 0) {
-          await createNewChat();
-          return fetchUserChats();
-        } else {
+        if (data.chats.length > 0) {
           setSelectedChat(data.chats[0]);
+        } else {
+          setSelectedChat(null);
         }
       } else {
         toast.error(data.message);

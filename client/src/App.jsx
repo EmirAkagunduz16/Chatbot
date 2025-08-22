@@ -12,7 +12,7 @@ import Loading from "./pages/Loading.jsx";
 import { useAppContext } from "./context/AppContext.jsx";
 import Login from "./pages/Login.jsx";
 
-import Toaster from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const { user, loadingUser } = useAppContext();
@@ -22,7 +22,16 @@ const App = () => {
   if (pathname === "/loading" || loadingUser) return <Loading />;
   return (
     <>
-    <Toaster />
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+        }}
+      />
       {!isMenuOpen && (
         <img
           src={assets.menu_icon}
