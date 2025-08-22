@@ -21,6 +21,9 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
   } = useAppContext();
   const [search, setSearch] = useState("");
 
+  // Debug: Chat sayısını göster
+  console.log("Chats in sidebar:", chats, chats.length);
+
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
@@ -86,15 +89,15 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       </div>
 
       {/* Recent Chats */}
-      {chats.length > 0 && <p className="mt-4 text-sm">Recent Chats</p>}
+      <p className="mt-4 text-sm">Recent Chats ({chats.length})</p>
       <div className="flex-1 overflow-y-scroll mt-3 text-sm space-y-3">
         {chats
           .filter((chat) =>
-            chat.messages[0]
+            chat.messages && chat.messages.length > 0
               ? chat.messages[0]?.content
                   .toLowerCase()
                   .includes(search.toLowerCase())
-              : chat.name.toLowerCase().includes(search.toLowerCase)
+              : chat.name.toLowerCase().includes(search.toLowerCase())
           )
           .map((chat) => (
             <div

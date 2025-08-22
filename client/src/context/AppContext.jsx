@@ -54,10 +54,13 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchUserChats = async () => {
     try {
+      console.log("Fetching user chats...");
       const { data } = await axios.get("/api/chat/get", {
         headers: { Authorization: token },
       });
+      console.log("Chat fetch response:", data);
       if (data.success) {
+        console.log("Setting chats:", data.chats);
         setChats(data.chats);
         if (data.chats.length > 0) {
           setSelectedChat(data.chats[0]);
@@ -68,6 +71,7 @@ export const AppContextProvider = ({ children }) => {
         toast.error(data.message);
       }
     } catch (error) {
+      console.error("Error fetching chats:", error);
       toast.error(error.message);
     }
   };
