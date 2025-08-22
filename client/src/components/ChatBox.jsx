@@ -3,6 +3,7 @@ import { useAppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 import Message from "./Message";
 import Credits from "../pages/Credits";
+import toast from "react-hot-toast";
 
 const ChatBox = () => {
   const containerRef = useRef(null);
@@ -48,10 +49,10 @@ const ChatBox = () => {
         }
       } else {
         toast.error(data.message);
-        set.prompt(promptCopy);
+        setPrompt(promptCopy);
       }
     } catch (error) {
-      toast.error(data.message);
+      toast.error(error.message);
     } finally {
       setPrompt("");
       setLoading(false);
