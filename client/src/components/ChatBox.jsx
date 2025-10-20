@@ -21,6 +21,7 @@ const ChatBox = () => {
     try {
       e.preventDefault();
       if (!user) return toast("Login to send message");
+      if (!selectedChat) return toast("Please select or create a chat first");
       setLoading(true);
       const promptCopy = prompt;
       setPrompt("");

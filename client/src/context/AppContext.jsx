@@ -14,7 +14,7 @@ export const AppContextProvider = ({ children }) => {
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [token, setToken] = useState(localStorage.getItem("token" || null));
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [loadingUser, setLoadingUser] = useState(true);
 
   const fetchUser = async () => {
@@ -38,7 +38,7 @@ export const AppContextProvider = ({ children }) => {
     try {
       if (!user) return toast("Login to create a new chat");
       navigate("/");
-      const { data } = await axios.get("/api/chat/create", {
+      const { data } = await axios.post("/api/chat/create", {}, {
         headers: { Authorization: token },
       });
       if (data.success) {
